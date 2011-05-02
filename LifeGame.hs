@@ -14,12 +14,6 @@ gameBoard = ["..........",
              ".........."
             ]
 
--- The print-out of the board.
-printBoard :: Board -> IO ()
-printBoard []     = putStr ""
-printBoard (x:xs) = do putStr x
-                       printBoard xs
-
 -- Takes a board and the index to check and returns the number of neighbours that index has.
 countNeighbours :: Board -> Int -> Int
 
