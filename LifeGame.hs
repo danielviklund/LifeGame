@@ -1,18 +1,24 @@
-{-
-    Basic cellular automata. Read comments for more info.
-
-    To try it out:
-      [in ghci] genOut (genLoop <nr. of runs> seed)
--}
-
--- The Seed type.
-type Generation = String
+-- 2D cellular automaton, similar to Conway's Game of Life.
+type Board = [String]
 -- The Rule type.
-type Rules = [[String]]
+type Rules = [[String]]   -- Shouldn't be needed anymore (I think).
+
+gameBoard :: Board        -- Default game board.
+gameBoard = ["..........",
+             "..........",
+             "..........",
+             "..........",
+             "..........",
+             "..........",
+             "..........",
+             "..........",
+             "..........",
+             ".........."
+            ]
 
 -- The print-out
-genOut :: Generation -> IO ()
-genOut a = putStr (a ++ "\n")
+printBoard :: Board -> IO ()
+printBoard a = putStr (a ++ "\n")
 
 -- Generator loop. Generates the cellular automata. Recursive function.
 genLoop :: Int -> Generation -> Generation
