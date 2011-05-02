@@ -1,3 +1,5 @@
+import IO.hs
+
 -- 2D cellular automaton, similar to Conway's Game of Life.
 type Board = [String]
 
