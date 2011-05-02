@@ -1,7 +1,5 @@
 -- 2D cellular automaton, similar to Conway's Game of Life.
 type Board = [String]
--- The Rule type.
-type Rules = [[String]]   -- Shouldn't be needed anymore (I think).
 
 gameBoard :: Board        -- Default game board.
 gameBoard = ["..........",
@@ -16,32 +14,19 @@ gameBoard = ["..........",
              ".........."
             ]
 
--- The print-out
+-- The print-out of the board.
 printBoard :: Board -> IO ()
-printBoard a = putStr (a ++ "\n")
+printBoard []     = putStr ""
+printBoard (x:xs) = do putStr x
+                       printBoard xs
+
+-- Takes a board and the index to check and returns the number of neighbours that index has.
+countNeighbours :: Board -> Int -> Int
 
 -- Generator loop. Generates the cellular automata. Recursive function.
 genLoop :: Int -> Generation -> Generation
 genLoop 0 gen = "\n"  -- Base case.
 genLoop x gen = (applyRules gen rules (length gen)) ++ "\n" ++ (genLoop (x - 1) (applyRules gen rules (length gen)))
-
--- The string to work on. 
---  NOTE: The chars on the rims (head and last) will remain constant throughout the generations, although they _will_ continue to influence the adjecent cell. -}
-seed :: Generation
-seed = ".................#.........................."
-
--- The rules for the cellular automata. These rules will, in the future, be imported from the arguments passed to the program (or supplied by the user via a text file).
--- Note: This thing is hairier than Chewbacca on Rogaine. It _MUST_ be flattened out.
-rules :: Rules
-rules = [ ["...", "."], 
-          ["..#", "#"],
-          [".#.", "#"],
-          [".##", "."],
-          ["#..", "#"],
-          ["#.#", "#"],
-          ["##.", "."],
-          ["###", "."]
-        ]
 
 -- Applies rules to a Generation (which could be the seed) to produce a new nested list of strings ([Char]), i.e. a new "Generation".
 applyRules :: Generation -> Rules -> Int -> Generation
